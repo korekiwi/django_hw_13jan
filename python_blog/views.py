@@ -89,16 +89,16 @@ def catalog_tags(request):
 
 
 def tag_detail(request, tag_slug):
-    dataset_posts = []
+    posts = []
 
-    for post in dataset:
-        if tag_slug in python_slugify_list(post.get('hashtags')):
-            dataset_posts.append(post)
+    for post in Post.objects.all():
+        if tag_slug in python_slugify_list(post.tags):
+            posts.append(post)
 
     context = {
         "title": f"Страница тега {tag_slug}",
         "slug": tag_slug,
-        "dataset_posts": dataset_posts,
+        "dataset_posts": posts,
     }
 
     return render(request, "tag_detail.html", context)
