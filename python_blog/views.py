@@ -5,6 +5,8 @@ from django.urls import reverse
 from posts_dataset import dataset
 from help_functions import python_slugify, python_slugify_list
 
+from python_blog.models import Post
+
 CATEGORIES = [
     {"slug": "python", "name": "Python"},
     {"slug": "django", "name": "Django"},
@@ -12,7 +14,6 @@ CATEGORIES = [
     {"slug": "docker", "name": "Docker"},
     {"slug": "linux", "name": "Linux"},
 ]
-
 
 def main(request):
     # catalog_categories_url = reverse("blog:categories")
@@ -39,18 +40,16 @@ def catalog_posts(request):
 
     context = {
         "title": "Каталог постов",
-        "dataset_posts": dataset,
+        "posts": Post.objects.all(),
     }
     
     return render(request, "catalog_posts.html", context)
 
 
 def post_detail(request, post_slug):
-    for post in dataset:
-        if post.get('slug') == post_slug:
-            context = post
-            break
-
+    context = {
+        "post": Post.objects.get(slug=post_slug),
+        }
     return render(request, "post_detail.html", context)
 
 

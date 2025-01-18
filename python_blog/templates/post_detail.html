@@ -1,36 +1,23 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{title}}
+{{post.title}}
 {% endblock title %}
 
 {% block content %}
-{% if is_published %}
 <div class="post_gallery">
     <div class="post">
-        <h1>{{title}}</h1>
+        <h1>{{post.title}}</h1>
 
         <p class="tags">
-            {% for hashtag in hashtags %}
-            #{{hashtag}}
+            {% for tag in post.tags %}
+            #{{tag}}
             {% endfor %}
         </p>
 
-        <p>{{post}}</p>
-        <p>Просмотры: {{views}} | Лайки: {{likes}}</p>
-    </div>
-        
-        {% for comment in comments %}
-        <div class="comment">
-            <div class="comment_username">{{comment.username}}</div>
-            <div class="comment_text">{{comment.text}}</div>
-        </div>
-        {% endfor %}
-        
+        <p>{{post.content}}</p>
+        <p>Просмотры: {{post.views}}</p>
+    </div>      
 </div>
-
-{% else %}
-    <p>Этот пост еще не был опубликован.</p>
-{% endif %}
 
 {% endblock content %}
